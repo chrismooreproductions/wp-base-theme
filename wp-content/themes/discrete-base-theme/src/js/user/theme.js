@@ -3,6 +3,6 @@
 (function($) {
 
 	// $ Works! You can test it with next line if you like
-	console.log('Hello World, jQuery is working :) - ' + $);
+	console.log('Hello World, jQuery is working :)');
 
 })( jQuery );

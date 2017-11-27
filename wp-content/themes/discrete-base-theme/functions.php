@@ -118,12 +118,14 @@ add_action( 'widgets_init', 'discrete_base_theme_widgets_init' );
  */
 function discrete_base_theme_scripts() {
 	wp_enqueue_style( 'discrete-base-theme-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'jquery-ui-css', "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" );
 
 	// wp_enqueue_script( 'discrete-base-theme-navigation', get_template_directory_uri() . '/src/js/vendor/navigation.js', array(), '20151215', true );
 
 	// wp_enqueue_script( 'discrete-base-theme-skip-link-focus-fix', get_template_directory_uri() . '/src/js/vendor/skip-link-focus-fix.js', array(), '20151215', true );
 
 	wp_enqueue_script( 'theme-js', get_stylesheet_directory_uri() . '/build/assets/js/bundle.js', array('jquery'), '20151215', true );
+	wp_enqueue_script( 'theme-js-ui', "https://code.jquery.com/ui/1.12.1/jquery-ui.js", array('jquery'), '20151215', false );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -160,6 +162,32 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
 function discrete_custom_user_styles() {
 	wp_enqueue_style( 'custom-user-styles', get_stylesheet_directory_uri() . '/build/assets/css/theme.css' );
+	// wp_enqueue_script( 'ajax-pagination',  get_stylesheet_directory_uri() . '/build/assets/vendor/ajax-pagination.js', array( 'jquery' ), '1.0', true );
+	// wp_localize_script( 'ajax-pagination', 'ajaxpagination', array(
+	// 	'ajaxurl' => admin_url( 'admin-ajax.php' )
+	// ));
 }
-
 add_action( 'wp_enqueue_scripts', 'discrete_custom_user_styles' );
+
+/**
+  * Enable AJAX calls
+**/
+
+// wp_enqueue_script( 'wp-api' );
+
+// function my_ajax_pagination() {
+//     echo "Hello World";
+//     die();
+// }
+// add_action( 'wp_ajax_nopriv_ajax_pagination', 'my_ajax_pagination' );
+// add_action( 'wp_ajax_ajax_pagination', 'my_ajax_pagination' );
+
+
+/**
+ * Enable ACF 5 early access
+ * Requires at least version ACF 4.4.12 to work
+ */
+define('ACF_EARLY_ACCESS', '5');
+if( function_exists('acf_add_options_page') ) {
+	acf_add_options_page();
+}

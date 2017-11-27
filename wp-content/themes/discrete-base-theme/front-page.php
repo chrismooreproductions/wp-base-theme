@@ -30,10 +30,6 @@ get_header(); ?>
 			endwhile; // End of the loop.
 			?>
 
-			<div class="slider_wrap">
-				<div id="slider"></div>
-			</div>
-
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
