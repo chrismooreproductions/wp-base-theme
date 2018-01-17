@@ -1,0 +1,25 @@
+/*--------------------------------------------------------------
+## Links
+--------------------------------------------------------------*/
+a {
+	color: $text-dark-grey;
+    transition: 0.3s all ease-in-out;
+}
+
+a:visited {
+	color: $text-dark-grey;
+}
+
+a:hover, a:focus, a:active {
+	color: $text-light-grey;
+	text-decoration: none;
+
+}
+
+a:focus {
+	outline: thin dotted;
+}
+
+a:hover, a:active {
+	outline: 0;
+}

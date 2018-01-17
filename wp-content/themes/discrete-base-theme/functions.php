@@ -118,14 +118,13 @@ add_action( 'widgets_init', 'discrete_base_theme_widgets_init' );
  */
 function discrete_base_theme_scripts() {
 	wp_enqueue_style( 'discrete-base-theme-style', get_stylesheet_uri() );
-	wp_enqueue_style( 'jquery-ui-css', "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" );
 
-	// wp_enqueue_script( 'discrete-base-theme-navigation', get_template_directory_uri() . '/src/js/vendor/navigation.js', array(), '20151215', true );
-
-	// wp_enqueue_script( 'discrete-base-theme-skip-link-focus-fix', get_template_directory_uri() . '/src/js/vendor/skip-link-focus-fix.js', array(), '20151215', true );
-
+	// Enqueue bundled js
 	wp_enqueue_script( 'theme-js', get_stylesheet_directory_uri() . '/build/assets/js/bundle.js', array('jquery'), '20151215', true );
-	wp_enqueue_script( 'theme-js-ui', "https://code.jquery.com/ui/1.12.1/jquery-ui.js", array('jquery'), '20151215', false );
+
+	// Enqueue fontawesome
+	wp_enqueue_script( 'fontawesome', 'https://use.fontawesome.com/releases/v5.0.1/js/all.js', array('jquery'), '5.0', true );
+
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -160,12 +159,22 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+// Fix jquery for Bootstrap
+
+if (!is_admin()) add_action("wp_enqueue_scripts", "my_jquery_enqueue", 11);
+function my_jquery_enqueue() {
+   wp_deregister_script('jquery');
+   wp_register_script('jquery', "https://code.jquery.com/jquery-3.2.1.min.js", false, null);
+   wp_enqueue_script('jquery');
+}
+
+// Mostly here we are enqueuing Bootstrap and the compiled SASS files
 function discrete_custom_user_styles() {
+	wp_enqueue_style( 'bootstrap-cdn-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css');
+	wp_enqueue_script( 'popper-cdn-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', array( 'jquery' ), '1.0', true);
+	wp_enqueue_script( 'bootstrap-cdn-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', array( 'popper-cdn-js' ), '1.0', true);
+	// Enqueue User Styles (ensure this is after bootstrap!)
 	wp_enqueue_style( 'custom-user-styles', get_stylesheet_directory_uri() . '/build/assets/css/theme.css' );
-	// wp_enqueue_script( 'ajax-pagination',  get_stylesheet_directory_uri() . '/build/assets/vendor/ajax-pagination.js', array( 'jquery' ), '1.0', true );
-	// wp_localize_script( 'ajax-pagination', 'ajaxpagination', array(
-	// 	'ajaxurl' => admin_url( 'admin-ajax.php' )
-	// ));
 }
 add_action( 'wp_enqueue_scripts', 'discrete_custom_user_styles' );
 
@@ -182,6 +191,12 @@ add_action( 'wp_enqueue_scripts', 'discrete_custom_user_styles' );
 // add_action( 'wp_ajax_nopriv_ajax_pagination', 'my_ajax_pagination' );
 // add_action( 'wp_ajax_ajax_pagination', 'my_ajax_pagination' );
 
+function wpdocs_theme_setup() {
+    add_image_size( 'large-image-cropped', 1325, 755, true ); // (cropped)
+	add_image_size( 'welcome-content_thumb', 400, 400, true );
+	add_image_size( 'my-blog-thumb', 633, 332, true );
+}
+add_action( 'after_setup_theme', 'wpdocs_theme_setup' );
 
 /**
  * Enable ACF 5 early access

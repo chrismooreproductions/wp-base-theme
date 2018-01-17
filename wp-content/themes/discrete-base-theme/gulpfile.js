@@ -7,12 +7,29 @@ var gulp        = require('gulp'),
     sourcemaps  = require('gulp-sourcemaps'),
     concat      = require('gulp-concat')
     path        = require('path'),
-    merge       = require('merge-stream')
-    gutil       = require('gulp-util')
+    merge       = require('merge-stream'),
+    gutil       = require('gulp-util'),
+    browserSync = require('browser-sync'),
+    reload      = browserSync.reload;
     uglify      = require('gulp-uglify');
 
 // define the default task and add the watch task to it
 gulp.task('default', ['watch']);
+
+gulp.task('browser-sync', function() {
+    var files = [
+    './build/assets/css/theme.css',
+    './*.php',
+    './page-templates/*.php'
+    ];
+
+    //initialize browsersync
+    browserSync.init(files, {
+    //browsersync with a php server
+    proxy: "localhost:8000/",
+    notify: true
+    });
+});
 
 // configure the jshint task
 gulp.task('eslint', function() {
@@ -31,7 +48,8 @@ gulp.task('build-css', function() {
         .pipe(sass({outputStyle: 'compressed'}))
         .pipe(concat('theme.css'))
         .pipe(sourcemaps.write()) // Add the map to modified source.
-        .pipe(gulp.dest('build/assets/css'));
+        .pipe(gulp.dest('build/assets/css'))
+        .pipe(reload({stream:true}));
 });
 
 gulp.task('build-js', function() {
@@ -45,8 +63,9 @@ gulp.task('build-js', function() {
 });
 
 // configure which files to watch and what tasks to use on file changes
-gulp.task('watch', function() {
+gulp.task('watch', ['build-css', 'browser-sync'], function() {
     gulp.watch('src/js/**/*.js', ['eslint']);
     gulp.watch('src/js/user/*.js', ['build-js']);
     gulp.watch('src/scss/**/*.scss', ['build-css']);
+
 });

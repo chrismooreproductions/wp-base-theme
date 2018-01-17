@@ -1,1 +1,19 @@
-@import "blocks/image-block.scss";
+@import "settings/variables";
+
+// Import blocks
+@import "blocks/header";
+@import "blocks/splash-image";
+@import "blocks/welcome-content";
+@import "blocks/newsletter-signup";
+@import "blocks/my-blog";
+@import "blocks/footer";
+
+// Import Elements
+@import "elements/links";
+@import "elements/bootstrap";
+@import "elements/rainbow-header.scss";
+@import "elements/typography";
+@import "elements/mailchimp";
+
+// Import Blocks
+@import "blocks/image-block";

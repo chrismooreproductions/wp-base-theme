@@ -1,0 +1,18 @@
+.newsletter-signup .mc4wp-form {
+    display: inline-block;
+    width: auto;
+    flex: 1;
+
+    .form-control {
+        display: flex;
+    }
+    input[type="email"] {
+        display: flex;
+        flex-grow: 1;
+        border: 0;
+        margin-right: 10px;
+        &:focus {
+            background-color: white;
+        }
+    }
+}

@@ -14,6 +14,13 @@
 
 get_header(); ?>
 
+<?php if ( is_front_page() || is_home() ) {
+	echo '<div class="col-md-12">' ;
+} else {
+	echo '<div class="col-md-9">' ;
+}
+?>
+
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
@@ -32,6 +39,7 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
+</div>
 
 <?php
 get_sidebar();

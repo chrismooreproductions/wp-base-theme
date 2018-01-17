@@ -1,0 +1,30 @@
+footer {
+
+}
+
+.footer__site-info {
+    margin: 15px;
+
+    h2 {
+        font-size: 3rem;
+        font-weight: 600;
+
+        a {
+            color: $text-dark-grey;
+        }
+    }
+    h3 {
+        font-size: 1.7rem;
+        font-style: italic;
+        color: $text-light-grey;
+    }
+}
+
+.footer__social-icons {
+    text-align: right;
+    margin: 1rem 3rem;
+    font-size: 2rem;
+    svg {
+        margin-left: 1.5rem;
+    }
+}

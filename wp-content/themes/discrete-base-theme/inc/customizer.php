@@ -11,7 +11,7 @@
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
 function discrete_base_theme_customize_register( $wp_customize ) {
-	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
+	// $wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 
@@ -27,6 +27,14 @@ function discrete_base_theme_customize_register( $wp_customize ) {
 	}
 }
 add_action( 'customize_register', 'discrete_base_theme_customize_register' );
+
+function bwpy_customizer( $wp_customize ) {
+	$wp_customize->add_section( 'bwpy_content_options_section' , array(
+	'title'      => __( 'Content Options', 'bwpy' ),
+	'priority'   => 200,
+) );
+}
+add_action( 'customize_register', 'bwpy_customizer' );
 
 /**
  * Render the site title for the selective refresh partial.
@@ -50,6 +58,6 @@ function discrete_base_theme_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function discrete_base_theme_customize_preview_js() {
-	wp_enqueue_script( 'discrete-base-theme-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
+	wp_enqueue_script( 'discrete-base-theme-customizer', get_stylesheet_directory_uri() . '/build/assets/vendor/customizer.js', array( 'customize-preview' ), '1.0', true );
 }
 add_action( 'customize_preview_init', 'discrete_base_theme_customize_preview_js' );
